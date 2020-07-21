@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+
+<!-- <div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8"> -->
+   
+            <h2>Makaleler</h2>
+            <hr>
+
+            <div class="row">
+                <form>
+                    {% csrf_token %}
+
+                    <input type="text" name="keyword" class="input-sm" >
+                <button type="submit" class="btn btn-success">Ara</button>
+            </form>
+            </div>
+        <!-- </div>
+    </div>
+
+</div>
+ -->
+
+
+{% if articles %}
+
+{% for article in articles  %}
+<!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+     
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+      
+        <a href="{% url 'article:detail' article.id %}">><h2 class="mt-4">{{article.title}}</h2></a>
+        <!-- /articles/article/5 gibi dinamik urls tanıtmış olduk
+        Author -->
+        <p class="lead">
+         {{article.author.username}} tarafından yayınlandı
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>{{article.created_date}}</p>
+
+        <hr>
+        <!-- resim kısmı -->
+        <!--  resmimiz varsa aç resmimiz yoksada sayfayı aç dedik if işleminde  -->
+        {% if article.article_image %}                 
+        <a href="{% url 'article:detail' article.id %}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""></a>
+        
+        {% endif %}
+      
+       
+
+        <!-- Post Content -->
+        <p class="lead">
+        {{article.content|safe|truncatewords:47}}                    <!--devamını oku anlamına geliyor (truncatewords)belli bir karaktarden sonrasını göstermiyor-->
+        
+        </p>
+
+        <a style="float:right;" href="{% url 'article:detail' article.id %}" class="btn btn-success">Devamını Oku</a>
+        <hr>
+
+       
+       
+       
+
+      
+        
+        
+    </div>
+    </div>
+    </div>
+{% endfor %}
+{% else %}
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+<div class="alert alert-danger">Makale bulunamadı 
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+{% endblock body %}

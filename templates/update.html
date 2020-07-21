@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% load crispy_forms_tags %}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+
+        <h3>Makale Güncelle</h3>
+        <hr>
+        <form method="post">
+            {% csrf_token %}                      <!--mutlaka yazılması gerekir-->
+            {{form.media}}                <!--      Ckeditörümü projeye dahil etmiş olduk -->
+            {{form|crispy}}              <!--kullanıcı adının hizada durması için-->
+        
+            <button type="submit" class="btn btn-success">Makale Güncelle</button>
+        </form>
+
+    </div>
+  </div>
+{% endblock body %}
